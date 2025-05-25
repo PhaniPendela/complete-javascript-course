@@ -33,7 +33,7 @@
 // calcAge(1991);
 // // console.log(age);
 // // printAge();
-
+/*
 //Variables
 console.log(me);
 // console.log(job);
@@ -80,3 +80,37 @@ const z = 3;
 console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.Z);
+*/
+
+console.log(this);
+const calcAge = function (birthYear) {
+    console.log(2037 - birthYear);
+    console.log(this);
+} //No owner
+calcAge(1991);
+
+const calcAgeArrow = (birthYear) => {
+    console.log(2037 - birthYear);
+    console.log(this);
+} // Parent Scope
+calcAgeArrow(1980);
+
+const jonas = {
+    year: 1991,
+    calcAge: function() {
+        console.log(this);
+        console.log(2037 - this.year);
+    },
+};
+
+jonas.calcAge();
+
+const malinda = {
+    year: 2017,
+};
+
+malinda.calcAge = jonas.calcAge;
+malinda.calcAge();
+
+const f = jonas.calcAge;
+f(); //Becomes a regular function
