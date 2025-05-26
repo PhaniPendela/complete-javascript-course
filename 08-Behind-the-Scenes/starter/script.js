@@ -115,7 +115,7 @@ malinda.calcAge();
 const f = jonas.calcAge;
 f(); //Becomes a regular function
 */
-
+/*
 const jonas = {
     firstName: 'Jonas',
     year: 1991,
@@ -164,3 +164,54 @@ var addArrow = () => {
     return a + b;
 }
 addArrow(2, 5, 8);
+*/
+
+// Object reference
+
+const jessica1 = {
+    firstName: 'jessica',
+    lastName: 'Williams',
+    age: 27,
+};
+
+function marryPerson (originalPerson, newLastName) {
+    originalPerson.lastName = newLastName;
+    return originalPerson;
+} // Objects are passed by reference
+
+const marriedJessica = marryPerson(jessica1, 'Davis');
+
+// const marriedJessica = jessica1;
+// marriedJessica.lastName = 'Davis';
+
+console.log('Berfore: ', jessica1);
+console.log('After: ', marriedJessica);
+
+// jessica = {x:30,}; // Error as its a const
+// jessica.age = 30;
+
+const jessica = {
+    firstName: 'jessica',
+    lastName: 'Williams',
+    age: 27,
+    family: ['Alice', 'Bob'], //Only holds reference not the actual value
+};
+
+// Shallow Copy
+const jessicaCopy = { ...jessica }; //ACTUALLY Copy
+jessicaCopy.lastName = 'Davis';
+
+console.log(jessica, jessicaCopy);
+// jessicaCopy.family.push('Mary');
+// jessicaCopy.family.push('John');
+
+// console.log('Berfore: ', jessica);
+// console.log('After: ', jessicaCopy);
+
+// Deep Copy
+const jessicaClone = structuredClone(jessica);
+jessicaClone.family.push('Mary');
+jessicaClone.family.push('John');
+
+console.log('Original: ', jessica);
+console.log('Clone: ', jessicaClone);
