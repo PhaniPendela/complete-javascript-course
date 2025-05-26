@@ -50,7 +50,7 @@ const restaurant = {
   },
 };
 
-
+/*
 const arr = [2,3,4];
 const a = arr[0];
 const b = arr[1];
@@ -87,3 +87,4 @@ console.log(i, j, k);
 //Default Values
 const [p=1, q=1, r=1] = [8, 9];
 console.log(p ,q, r);
+*/
