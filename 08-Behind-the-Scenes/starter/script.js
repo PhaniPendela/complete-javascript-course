@@ -81,7 +81,7 @@ console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.Z);
 */
-
+/*
 console.log(this);
 const calcAge = function (birthYear) {
     console.log(2037 - birthYear);
@@ -114,3 +114,53 @@ malinda.calcAge();
 
 const f = jonas.calcAge;
 f(); //Becomes a regular function
+*/
+
+const jonas = {
+    firstName: 'Jonas',
+    year: 1991,
+    calcAge: function() {
+        // console.log(this);
+        console.log(2037 - this.year);
+
+        //Solution 1
+
+        // const self = this; //self or that
+        // const isMillenial = function () {
+        //     console.log(self);
+        //     console.log(self.year >= 1981 && self.year <= 1996);
+        // }
+
+        //Solution 2
+
+        const isMillenial = () => {
+            console.log(this); // From parent scope for arrow function
+            console.log(this.year >= 1981 && this.year <= 1996);
+        }
+
+        isMillenial();
+    },
+
+    greet: () => {
+        console.log(`Hey ${this.firstName}`);
+    }, // Never use arrow functions as methods
+};
+
+jonas.greet();
+jonas.calcAge();
+
+//arguments keyword
+
+const addExpr = function (a, b) {
+    console.log(arguments);
+    return a + b;
+};
+
+addExpr(2,5);
+addExpr(2,3,4,5);
+
+var addArrow = () => {
+    console.log(arguments);
+    return a + b;
+}
+addArrow(2, 5, 8);
