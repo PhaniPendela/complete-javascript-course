@@ -70,13 +70,20 @@ const restaurant = {
   },
 };
 
+
+
+/*
+/////////////////////////////////////////////////
+// The Nullish Operator
 restaurant.numGuests = 0;
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
-console.log(guests1);
 
 const guests2 = restaurant.numGuests || 10;
 console.log(guests2);
 
+// nullish: null and undefined
+const guestsCorrect = restaurant.numGuests ?? 10;
+console.log(guestsCorrect);
+*/
 /*
 ////////////////////////////////////////////////////////////////
 // Short Circuiting (&& and ||)
