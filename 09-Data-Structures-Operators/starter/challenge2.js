@@ -62,3 +62,10 @@ console.log(avg)
 for (const [key, value] of Object.entries(game.odds)) {
     (key != 'x') ? console.log(`Odd of victory ${game[key]}: ${value}`) : console.log(`Odd of draw: ${game.odds.x}`);
 }
+////////////////////////////////////////////////
+// BONUS IMPORTANT
+const scorers = {};
+for( const players of game.scored) {
+    scorers[players] ? scorers[players]++ : scorers[players] = 1;
+}
+console.log(scorers);
