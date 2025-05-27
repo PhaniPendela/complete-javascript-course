@@ -22,22 +22,21 @@ const mexicanFoods = new Set([
   'garlic',
 ]);
 
-
-const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat"];
+const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 const openingHours = {
-    [weekDays[3]]: {
-      open: 12,
-      close: 22,
-    },
-    [weekDays[4]]: {
-      open: 11,
-      close: 23,
-    },
-    [weekDays[5]]: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
+  [weekDays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekDays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekDays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
 };
 
 // Data needed for first part of the section
@@ -51,30 +50,58 @@ const restaurant = {
   //ES6 enhanced Object Literals
   openingHours,
 
-  order (starterIndex, mainIndex) {
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery ({
-    starterIndex = 1,
-    mainIndex = 0,
-    address,
-    time = '20:00',
-  }) {
+  orderDelivery({ starterIndex = 1, mainIndex = 0, address, time = '20:00' }) {
     console.log(
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
     );
   },
 
-  orderPasta (ing1, ing2, ing3) {
-    console.log(`Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`);
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
   },
 
-  orderPizza (mainIngredient, ...otherIngredients) {
+  orderPizza(mainIngredient, ...otherIngredients) {
     console.log(mainIngredient);
     console.log(otherIngredients);
   },
 };
+/*
+//////////////////////////////////////
+// Sets
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]); // Can hold mixed data types
+console.log(ordersSet);
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risotto');
+// ordersSet.clear();
+console.log(ordersSet);
+
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+//Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+*/
+
 /*
 /////////////////////////////////////////////////
 // Iterating through an object: Keys, Values
@@ -230,7 +257,6 @@ if (restaurant.orderPizza) {
 
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 */
-
 
 /*
 ////////////////////////////////////////////////////////////////////////////////////////////
