@@ -4,23 +4,23 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-const italianFoods = new Set([
-  'pasta',
-  'gnocchi',
-  'tomatoes',
-  'olive oil',
-  'garlic',
-  'basil',
-]);
+// const italianFoods = new Set([
+//   'pasta',
+//   'gnocchi',
+//   'tomatoes',
+//   'olive oil',
+//   'garlic',
+//   'basil',
+// ]);
 
-const mexicanFoods = new Set([
-  'tortillas',
-  'beans',
-  'rice',
-  'tomatoes',
-  'avocado',
-  'garlic',
-]);
+// const mexicanFoods = new Set([
+//   'tortillas',
+//   'beans',
+//   'rice',
+//   'tomatoes',
+//   'avocado',
+//   'garlic',
+// ]);
 
 const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
@@ -71,6 +71,49 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+
+///////////////////////////////////////////////////////
+const italianFoods = new Set([
+  'pasta',
+  'gnocchi',
+  'tomatoes',
+  'olive oil',
+  'garlic',
+  'basil',
+]);
+
+const mexicanFoods = new Set([
+  'tortillas',
+  'beans',
+  'rice',
+  'tomatoes',
+  'avocado',
+  'garlic',
+]);
+/*
+/////////////////////////////////////////////////////////////
+// ES2025 Additional Set Functions (also issubset, issuperset) fucntions check documentation
+const commonFoods = italianFoods.intersection(mexicanFoods);
+console.log(commonFoods);
+console.log([...commonFoods]);
+
+const italianMexicanFusion = italianFoods.union(mexicanFoods);
+console.log([...italianMexicanFusion])
+
+const italianMexicanFusionArray = (new Set([...italianFoods, ...mexicanFoods]));
+console.log(italianMexicanFusionArray);
+
+const uniqueItalianFoods = italianFoods.difference(mexicanFoods);
+const uniqueMexicanFoods = mexicanFoods.difference(italianFoods);
+console.log(uniqueItalianFoods);
+console.log(uniqueMexicanFoods);
+
+const uniqueItalianMexicanFoods = italianFoods.symmetricDifference(mexicanFoods);
+console.log(uniqueItalianMexicanFoods);
+
+console.log(italianFoods.isDisjointFrom(mexicanFoods));
+*/
+
 /*
 //////////////////////////////////////
 // Sets
