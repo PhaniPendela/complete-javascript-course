@@ -4,23 +4,23 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-// const italianFoods = new Set([
-//   'pasta',
-//   'gnocchi',
-//   'tomatoes',
-//   'olive oil',
-//   'garlic',
-//   'basil',
-// ]);
+const italianFoods = new Set([
+  'pasta',
+  'gnocchi',
+  'tomatoes',
+  'olive oil',
+  'garlic',
+  'basil',
+]);
 
-// const mexicanFoods = new Set([
-//   'tortillas',
-//   'beans',
-//   'rice',
-//   'tomatoes',
-//   'avocado',
-//   'garlic',
-// ]);
+const mexicanFoods = new Set([
+  'tortillas',
+  'beans',
+  'rice',
+  'tomatoes',
+  'avocado',
+  'garlic',
+]);
 
 const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
@@ -71,25 +71,40 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+/*
+///////////////////////////////////////////////////////////////////////////
+// Maps Introduction
+const rest = new Map();
+rest.set('name', 'Classico Italiono');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Libson, Portugal'));
 
-///////////////////////////////////////////////////////
-const italianFoods = new Set([
-  'pasta',
-  'gnocchi',
-  'tomatoes',
-  'olive oil',
-  'garlic',
-  'basil',
-]);
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are close :(');
 
-const mexicanFoods = new Set([
-  'tortillas',
-  'beans',
-  'rice',
-  'tomatoes',
-  'avocado',
-  'garlic',
-]);
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(`true`));
+console.log(rest.get(1));
+
+const time = 8;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')))
+
+console.log(rest.has('categories'));
+rest.delete(2);
+const arr = [1,2];
+rest.set(arr, 'test');
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+console.log(rest.size);
+// rest.clear();
+
+console.log( rest.get(arr));
+*/
 /*
 /////////////////////////////////////////////////////////////
 // ES2025 Additional Set Functions (also issubset, issuperset) fucntions check documentation
