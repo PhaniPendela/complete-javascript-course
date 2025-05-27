@@ -23,9 +23,9 @@ const mexicanFoods = new Set([
 ]);
 
 
-const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat"]
+const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat"];
 
-const hours = {
+const openingHours = {
     [weekDays[3]]: {
       open: 12,
       close: 22,
@@ -49,7 +49,7 @@ const restaurant = {
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
   // openingHours: openingHours;
   //ES6 enhanced Object Literals
-  hours,
+  openingHours,
 
   order (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
@@ -75,6 +75,36 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+/*
+/////////////////////////////////////////////////
+// Optional Chaining Operator
+if (restaurant.openingHours.mon){
+  console.log(restaurant.openingHours.mon.open);
+}
+// console.log(restaurant.openingHours.mon.open);
+
+// With optional chaining
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+
+//Example
+const days = ["mon", "tue", "wed", "thu", "fri", "sat"];
+for (let day of days) {
+  // console.log(day)
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}.`);
+}
+
+// Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist.');
+console.log(restaurant.orderRizado?.(0, 1) ?? 'Method does not exist.');
+
+// Arrays
+const users = [{name: 'Jonas', email: 'hello@james.io', }];
+// const users = [];
+
+console.log(users[0]?.name ?? 'User Array empty');
+*/
 /*
 ///////////////////////////////////////////////////////////////////
 // Looping through arrays
