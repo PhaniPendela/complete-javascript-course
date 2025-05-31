@@ -72,6 +72,105 @@ const restaurant = {
   },
 };
 /*
+/////////////////////////////////////////////////////
+// Working with strings part 2
+const airline = 'TAP Air Portugal';
+
+console.log(airline.toLocaleLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+const passenger = 'joNAS';
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+
+const lowerEmail = loginEmail.toLowerCase();
+const trimmedEmail = lowerEmail.trim();
+console.log(trimmedEmail);
+
+const normalisedEmail = loginEmail.toLowerCase().trim();
+console.log(normalisedEmail);
+console.log(email === normalisedEmail);
+
+// replacing
+const priceGB = '288,97€';
+const priceUS = priceGB.replace('€', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23, Boarding door 23!';
+
+console.log(announcement.replaceAll('door', 'gate'));
+console.log(announcement);
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Aib'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo'))
+  console.log('Part of the new airbus family');
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggae = items.toLowerCase();
+  if (baggae.includes('knife') || baggae.includes('gun'))
+    console.log('You are not allowed on board.');
+  else console.log('Welcome Abroad');
+};
+
+checkBaggage(`I have a laptop, some Food and a packet Knife`);
+checkBaggage('Socks and Camera');
+checkBaggage('Got some snacks and a gun for protection');
+*/
+/*
+////////////////////////////////////////////////////////////////
+// Working with strings - 1
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane.length);
+console.log('B747'[0]);
+console.log('B747'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));
+console.log(airline.indexOf('portugal')); // Case sensitive
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  const s = seat.slice(-1);
+  // console.log(s);
+  if (s == 'B' || s == 'E') {
+    console.log('You got the middle seat 😒');
+  }
+  else {
+    console.log('You got Lucky 😊');
+  }
+} 
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+*/
+/*
 /////////////////////////////////////////////////////////////////////////
 // Maps Iteration
 const question  = new Map([
