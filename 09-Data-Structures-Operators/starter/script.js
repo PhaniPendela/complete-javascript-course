@@ -1,8 +1,8 @@
 'use strict';
 
 // Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+// const flights =
+//   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 const italianFoods = new Set([
   'pasta',
@@ -71,6 +71,47 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+const allLogs = flights.split('+');
+for (const log of allLogs) {
+  const [type, start, end, time] = log.split(';');
+  // console.log(type);
+  const modifiedType = type.replaceAll('_', ' ').trim();
+  // console.log(modifiedType);
+  let index = 0;
+  for (let i = 0; i < start.length; i++) {
+    if (Number(start[i]) < 10) {
+      index = i;
+      break;
+    }
+  }
+  const modifiedStart = start.slice(0, index).toUpperCase();
+  for (let i = 0; i < end.length; i++) {
+    if (Number(start[i]) < 10) {
+      index = i;
+      break;
+    }
+  }
+  const modifiedEnd = end.slice(0, index).toUpperCase();
+  const modifiedTime = time.replace(':', 'h');
+  console.log(
+    [
+      modifiedType.includes('Delayed') ? '🔴' : '',
+      modifiedType,
+      'from',
+      modifiedStart,
+      'to',
+      modifiedEnd,
+      `(${modifiedTime})`,
+    ]
+      .join(' ')
+      .padStart(43, ' ')
+  );
+}
+
 /*
 //////////////////////////////////////////////////////////////
 // Working with strings Part 3
