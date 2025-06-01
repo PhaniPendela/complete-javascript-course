@@ -1,8 +1,19 @@
 'use strict';
 
+/*
+///////////////////////////////////////////////////
+// Default Params
 const bookings = [];
 
-const createBooking = function (flightNum, numPassengers, price) {
+const createBooking = function (
+  flightNum,
+  numPassengers = 1,
+  price = 199 * numPassengers
+) {
+  // ES5
+  // numPassengers = numPassengers || 1;
+  // price = price || 299;
+
   const booking = {
     flightNum,
     numPassengers,
@@ -13,3 +24,32 @@ const createBooking = function (flightNum, numPassengers, price) {
 };
 
 createBooking('LH123');
+createBooking('LH123', 2, 800);
+createBooking('LH123', 2);
+createBooking('LH123', 5);
+
+createBooking('LH123', undefined, 1000);
+*/
+/*
+/////////////////////////////////////////////
+// Reference vs value arguments
+const flight = 'LH234';
+const jonas = {
+  name: 'Jonas',
+  passport: 24756456412,
+};
+
+const checkIn = function (flightNum, passenger) {
+  flightNum = 'LH999';
+  passenger.name = 'Mr. ' + passenger.name;
+  if (passenger.passport === 24756456412) {
+    alert('Checked in');
+  } else {
+    alert('Wrong Passport');
+  }
+};
+
+checkIn(flight, jonas);
+console.log(flight);
+console.log(jonas);
+*/
