@@ -215,7 +215,7 @@ const addTaxRate = function (rate) {
 const addVAT2 = addTAXReturn(0.23);
 console.log(addVAT2(200));
 */
-
+/*
 ////////////////////////////////////////////////////////////////////////////////////////
 // Challenge #1
 const poll = {
@@ -255,3 +255,43 @@ document
 // Bonus Part Data
 // var testData1 = [5, 2, 3];
 // var answers = [1, 5, 3, 9, 6, 1];
+*/
+/*
+////////////////////////////////////////////////////////////////////////////
+// Immediately Invoked Function Expression
+
+const runOnce = function () {
+  console.log('This will never run again!');
+};
+
+runOnce();
+// IIFE
+(function () {
+  console.log('This will never run again!');
+  const isPrivate = 23;
+})();
+// console.log(isPrivate);
+// Arrow Function
+(() => console.log(`This will never run again!`))();
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+// console.log(isPrivate);
+console.log(notPrivate);
+*/
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
