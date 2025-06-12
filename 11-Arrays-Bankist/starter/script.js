@@ -71,6 +71,80 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+/*
+/////////////////////////////////////////////////
+// Simple Array Methods
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// SLICE
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-2));
+console.log(arr.slice(-1));
+console.log(arr.slice(1, -2));
+console.log(arr.slice());
+
+// SPLICE
+// console.log(arr.splice(2));
+arr.splice(-1);
+console.log(arr);
+arr.splice(1, 2);
+console.log(arr);
+
+arr = ['a', 'b', 'c', 'd', 'e'];
+let arr2 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr2.reverse());
+
+// CONCAT
+console.log(arr.concat(arr2));
+
+// JOIN
+const letters = arr.concat(arr2);
+console.log(letters.join('-'));
+*/
+/*
+////////////////////////////////////////
+// New Method in ES2022
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0));
+
+// Getting last element
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1)[0]);
+console.log(arr.at(-1));
+*/
+/*
+////////////////////////////////////////////////////////////////////
+// FOR EACH AND FOR OD Loop
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const movement of movements) {
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(
+      `Movement ${i + 1}: You diposited ${movement} amount in the bank.`
+    );
+  } else {
+    console.log(
+      `Movement ${i + 1}: You withdrew ${Math.abs(
+        movement
+      )} amount from the bank.`
+    );
+  }
+}
+console.log(`-----------------FOR EACH--------------------`);
+movements.forEach(function (mov, i, arr) {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You diposited ${mov} amount in the bank.`);
+  } else {
+    console.log(
+      `Movement ${i + 1}: You withdrew ${Math.abs(mov)} amount from the bank.`
+    );
+  }
+});
+*/
