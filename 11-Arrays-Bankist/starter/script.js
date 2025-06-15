@@ -61,6 +61,11 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Added
+const containerTransfer = document.querySelector('.operation--transfer');
+const containerClose = document.querySelector('.operation--close');
+const containerLoan = document.querySelector('.operation--loan');
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   // .textcontent = ''
@@ -79,35 +84,41 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 };
 
-calcDisplayBalance(account1.movements);
-
-const calcDisplaySummary = function (movements) {
-  const netDeposits = movements
+const calcDisplaySummary = function (acc) {
+  const netDeposits = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${netDeposits}€`;
 
-  const netWithdrawals = movements
+  const netWithdrawals = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(netWithdrawals)}€`;
 
-  const netIntrest = movements
+  const netIntrest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${netIntrest}€`;
 };
 
-calcDisplaySummary(account1.movements);
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+
+  // Display Balance
+  calcDisplayBalance(acc);
+
+  // Display Summary
+  calcDisplaySummary(acc);
+};
 
 const computeUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -120,6 +131,121 @@ const computeUsernames = function (accs) {
 };
 
 computeUsernames(accounts);
+
+let currentAccount;
+
+// Event Handlers
+btnLogin.addEventListener('click', function (e) {
+  // Prevents form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  // console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome Back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // Clear Input Fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const transferAccount = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  const transferAmount = Number(inputTransferAmount.value);
+
+  if (
+    transferAmount > 0 &&
+    transferAccount &&
+    currentAccount.balance > transferAmount &&
+    transferAccount.username != currentAccount.username
+  ) {
+    // Doing Transfer
+    currentAccount.movements.push(-transferAmount);
+    transferAccount.movements.push(transferAmount);
+    // Update UI
+    updateUI(currentAccount);
+  } else {
+    const message = `
+      <footer style="color: red;">* Invalid Amount</footer>
+    `;
+    if (!containerTransfer.innerHTML.includes(message))
+      containerTransfer.insertAdjacentHTML('beforeend', message);
+  }
+  inputTransferAmount.value = inputTransferTo.value = '';
+  inputTransferAmount.blur();
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const loanAmount = Number(inputLoanAmount.value);
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some(mov => mov >= loanAmount / 10)
+  ) {
+    currentAccount.movements.push(loanAmount);
+    updateUI(currentAccount);
+  } else if (loanAmount <= 0) {
+    const message = `
+      <footer style="color: red;" id="valid">* Enter a Valid Amount</footer>
+    `;
+    if (!containerLoan.innerHTML.includes(message)){
+      document.getElementById("#large")?.innerHTML = '';
+      containerLoan.insertAdjacentHTML('beforeend', message);}
+  } else {
+    const message = `
+      <footer style="color: red;" id="large">* Enter a Smaller Amount</footer>
+    `;
+    if (!containerLoan.innerHTML.includes(message)){
+      document.getElementById("#valid")?.innerHTML = '';
+      containerLoan.insertAdjacentHTML('beforeend', message);}
+  }
+  inputLoanAmount.value = '';
+  inputLoanAmount.blur();
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  // const usernameIndex = accounts.findIndex(
+  //   acc => acc.username === inputCloseUsername.value
+  // );
+  if (
+    // usernameIndex != -1 &&
+    inputCloseUsername.value === currentAccount.username &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    // Account Delete
+    accounts.splice(
+      accounts.find(acc => acc.username === currentAccount.username),
+      1
+    );
+    // Hide UI / Log Out of account
+    containerApp.style.opacity = 0;
+  } else {
+    const message = `
+      <footer style="color: white;">* Invalid Username or PIN</footer>
+    `;
+    if (!containerClose.innerHTML.includes(message))
+      containerClose.insertAdjacentHTML('beforeend', message);
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -386,4 +512,32 @@ for (const acc of accounts) {
   }
 }
 console.log(accountFor);
+*/
+/*
+//////////////////////////////////////////////////////////////////
+// New FindLast and FindLastIndex
+
+console.log(movements);
+const lastWithdrawal = movements.findLast(mov => mov < 0);
+console.log(lastWithdrawal);
+
+console.log(
+  `Your largest large movement was ${
+    movements.length - movements.findLastIndex(mov => Math.abs(mov) > 1000)
+  } movements ago`
+);
+*/
+/*
+////////////////////////////////////////////////////////////////
+// Some and Every Methods
+
+console.log(movements);
+// EQUALITY
+console.log(movements.includes(-130));
+
+// CONDITION
+const anyDeposits = movements.some(mov => mov > 0);
+const anyDepositAbove = movements.some(mov => mov > 5000);
+
+console.log(anyDepositAbove, anyDeposits);
 */
