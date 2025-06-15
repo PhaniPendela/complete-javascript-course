@@ -177,14 +177,17 @@ btnTransfer.addEventListener('click', function (e) {
     // Doing Transfer
     currentAccount.movements.push(-transferAmount);
     transferAccount.movements.push(transferAmount);
+    if (document.querySelector('footer'))
+      document.querySelector('footer').innerHTML = '';
     // Update UI
     updateUI(currentAccount);
   } else {
     const message = `
-      <footer style="color: red;">* Invalid Amount</footer>
+      <footer style="color: red;">* Invalid Account or Amount</footer>
     `;
-    if (!containerTransfer.innerHTML.includes(message))
-      containerTransfer.insertAdjacentHTML('beforeend', message);
+    if (document.querySelector('footer'))
+      document.querySelector('footer').innerHTML = '';
+    containerTransfer.insertAdjacentHTML('beforeend', message);
   }
   inputTransferAmount.value = inputTransferTo.value = '';
   inputTransferAmount.blur();
@@ -199,21 +202,23 @@ btnLoan.addEventListener('click', function (e) {
     currentAccount.movements.some(mov => mov >= loanAmount / 10)
   ) {
     currentAccount.movements.push(loanAmount);
+    if (document.querySelector('footer'))
+      document.querySelector('footer').innerHTML = '';
     updateUI(currentAccount);
   } else if (loanAmount <= 0) {
     const message = `
       <footer style="color: red;" id="valid">* Enter a Valid Amount</footer>
     `;
-    if (!containerLoan.innerHTML.includes(message)){
-      document.getElementById("#large")?.innerHTML = '';
-      containerLoan.insertAdjacentHTML('beforeend', message);}
+    if (document.querySelector('footer'))
+      document.querySelectorAll('footer').innerHTML = '';
+    containerLoan.insertAdjacentHTML('beforeend', message);
   } else {
     const message = `
       <footer style="color: red;" id="large">* Enter a Smaller Amount</footer>
     `;
-    if (!containerLoan.innerHTML.includes(message)){
-      document.getElementById("#valid")?.innerHTML = '';
-      containerLoan.insertAdjacentHTML('beforeend', message);}
+    if (document.querySelector('footer'))
+      document.querySelector('footer').innerHTML = '';
+    containerLoan.insertAdjacentHTML('beforeend', message);
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
@@ -240,8 +245,9 @@ btnClose.addEventListener('click', function (e) {
     const message = `
       <footer style="color: white;">* Invalid Username or PIN</footer>
     `;
-    if (!containerClose.innerHTML.includes(message))
-      containerClose.insertAdjacentHTML('beforeend', message);
+    if (document.querySelector('footer'))
+      document.querySelector('footer').innerHTML = '';
+    containerClose.insertAdjacentHTML('beforeend', message);
   }
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
@@ -535,9 +541,105 @@ console.log(movements);
 // EQUALITY
 console.log(movements.includes(-130));
 
-// CONDITION
+// SOME: CONDITION
 const anyDeposits = movements.some(mov => mov > 0);
 const anyDepositAbove = movements.some(mov => mov > 5000);
 
 console.log(anyDepositAbove, anyDeposits);
+
+// EVERY: CONDITION
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Seperate CallBack
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.filter(deposit));
+console.log(account4.movements.every(deposit));
 */
+/*
+////////////////////////////////////////////////////////
+// Flat and Flat Map (ES2019)
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [[4, 5], 6], 7, 8];
+console.log(arrDeep.flat(1));
+console.log(arrDeep.flat(2));
+console.log(arrDeep.flat(3));
+
+const countMovements = accounts
+  .map(acc => acc.movements)
+  .flat(1)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(countMovements);
+
+const overallMovements = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(overallMovements);
+*/
+
+//////////////////////////////////////////////////////////
+// Challenge #4
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+dogs.forEach(function (dog) {
+  dog.recFood = dog.weight ** 0.75 * 28;
+});
+
+console.log(dogs);
+
+const sarahDog = dogs.filter(
+  dog => dog.owners.findIndex(name => name === 'Sarah') >= 0
+)[0];
+// console.log(sarahDog);
+// console.log(
+//   sarahDog.curFood,
+//   sarahDog.recFood,
+//   sarahDog.curFood > sarahDog.recFood
+// );
+if (sarahDog.curFood > sarahDog.recFood) {
+  console.log(`Dog is eating too much`);
+} else if (sarahDog.curFood < sarahDog.recFood) {
+  console.log('Dog is eating too little');
+} else {
+  console.log(`Dog is okay`);
+}
+
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recFood)
+  .map(dog => dog.owners)
+  .flat();
+console.log(ownersEatTooMuch);
+
+const strHigh = ownersEatTooMuch.join(' and ') + "'s dogs eat too much!";
+console.log(strHigh);
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+const strLow = ownersEatTooLittle.join(' and ') + "'s dogs eat too little!";
+console.log(strLow);
+
+console.log(dogs.some(dog => dog.curFood === Number(dog.recFood)));
+console.log(
+  dogs.some(
+    dog => dog.curFood >= 0.9 * dog.recFood && dog.curFood <= 1.1 * dog.recFood
+  )
+);
+
+const okayDogs = dogs.filter(
+  dog => dog.curFood >= 0.9 * dog.recFood && dog.curFood <= 1.1 * dog.recFood
+);
+console.log(okayDogs);
+
+const dogsCopy = dogs.slice();
