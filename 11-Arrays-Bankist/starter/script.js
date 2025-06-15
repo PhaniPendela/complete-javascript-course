@@ -88,6 +88,27 @@ const calcDisplayBalance = function (movements) {
 
 calcDisplayBalance(account1.movements);
 
+const calcDisplaySummary = function (movements) {
+  const netDeposits = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${netDeposits}€`;
+
+  const netWithdrawals = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(netWithdrawals)}€`;
+
+  const netIntrest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${netIntrest}€`;
+};
+
+calcDisplaySummary(account1.movements);
+
 const computeUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -326,4 +347,43 @@ const calcAverageHumanAge = function (ages) {
 
 console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+*/
+/*
+///////////////////////////////////////////////////////////
+// Pipelining
+const eurToUsd = 1.1;
+console.log(movements);
+
+// PIPELINE
+const balanceUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurToUsd;
+  })
+  // .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(balanceUSD);
+*/
+/*
+///////////////////////////////////////////////////////////
+// FIND Method on arrays
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+let accountFor = undefined;
+for (const acc of accounts) {
+  if (acc.owner === 'Jessica Davis') {
+    accountFor = acc;
+    break;
+  }
+}
+console.log(accountFor);
 */
