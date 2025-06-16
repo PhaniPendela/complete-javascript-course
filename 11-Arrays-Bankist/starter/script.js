@@ -66,11 +66,14 @@ const containerTransfer = document.querySelector('.operation--transfer');
 const containerClose = document.querySelector('.operation--close');
 const containerLoan = document.querySelector('.operation--loan');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
   // .textcontent = ''
-
-  movements.forEach(function (mov, i) {
+  const movs = movements.slice();
+  if (sort) {
+    movs.sort((a, b) => a - b);
+  }
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? `deposit` : `withdrawal`;
     const html = `
       <div class="movements__row">
@@ -251,6 +254,15 @@ btnClose.addEventListener('click', function (e) {
   }
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
+});
+
+let isSort = false;
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !isSort);
+  isSort = !isSort;
 });
 
 /////////////////////////////////////////////////
@@ -734,4 +746,34 @@ const maxWeightBreed = Math.max(
     .map(dog => dog.averageWeight)
 );
 console.log(maxWeightBreed);
+*/
+/*
+////////////////////////////////////////////////////////////
+// SORTING
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners);
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+
+// return < 0 A, B
+// return > 0 B, A
+
+// Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+// Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (b > a) return 1;
+// });
+movements.sort((a, b) => b - a);
+console.log(movements);
 */
