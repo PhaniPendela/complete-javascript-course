@@ -10,6 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  type: 'premium',
 };
 
 const account2 = {
@@ -17,6 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  type: 'standard',
 };
 
 const account3 = {
@@ -24,6 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  type: 'premium',
 };
 
 const account4 = {
@@ -31,6 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  type: 'basic',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -775,5 +779,93 @@ console.log(movements);
 //   if (b > a) return 1;
 // });
 movements.sort((a, b) => b - a);
+console.log(movements);
+*/
+/*
+////////////////////////////////////////////////////
+// Array Grouping (ES2024)
+
+console.log(movements);
+
+const groupedMovements = Object.groupBy(movements, movement =>
+  movement > 0 ? 'Deposit' : 'Withdrawal'
+);
+console.log(groupedMovements);
+
+const groupedByActivity = Object.groupBy(accounts, acc =>
+  acc.movements.length >= 8
+    ? 'very active'
+    : acc.movements.length >= 4
+    ? 'active'
+    : acc.movements.length >= 1
+    ? 'moderate'
+    : 'inactive'
+);
+console.log(groupedByActivity);
+
+// const groupedByTypes = Object.groupBy(accounts, acc => acc.type);
+const groupedByTypes = Object.groupBy(accounts, ({ type }) => type);
+console.log(groupedByTypes);
+*/
+/*
+////////////////////////////////////////////////////////////////
+// Creating Arrays
+
+console.log([1, 2, 3, 4, 5, 6]);
+console.log(new Array(1, 2, 3, 4, 5, 6));
+
+// Empty arr + fill method
+const x = new Array(7);
+console.log(x);
+// console.log(x.map(() => 0));
+x.fill(1);
+console.log(x);
+x.fill(23, 1, 3);
+console.log(x);
+
+// Array.from()
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+// const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+// console.log(movementsUI);
+
+labelBalance.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // const movementsUI = Array.from(
+  //   document.querySelectorAll('.movements__value')
+  // );
+  // console.log(movementsUI.map(el => el.textContent.replace('€', '')));
+
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => el.textContent.replace('€', '')
+  );
+  console.log(movementsUI);
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+  console.log(movementsUI2);
+});
+*/
+/*
+///////////////////////////////////////////////////////////////////////////
+// Methods that are destructive to non destructive alternatives
+
+console.log(movements);
+// const reversedMovements = movements.reverse();
+const reversedMovements = movements.toReversed();
+// const reversedMovements = movements.slice().reverse();
+console.log(movements);
+console.log(reversedMovements);
+
+// toSorted (sort), toSpliced (splice)
+
+// movements[1] = 2000;
+const newMovements = movements.with(1, 2000);
+console.log(newMovements);
 console.log(movements);
 */
