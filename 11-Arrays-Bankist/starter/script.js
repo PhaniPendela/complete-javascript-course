@@ -603,12 +603,13 @@ console.log(overallMovements);
 const dogs = [
   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
   { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John', 'Leo'] },
+  { weight: 18, curFood: 244, owners: ['Joe'] },
   { weight: 32, curFood: 340, owners: ['Michael'] },
 ];
 
 dogs.forEach(function (dog) {
-  dog.recFood = dog.weight ** 0.75 * 28;
+  dog.recFood = Math.floor(dog.weight ** 0.75 * 28);
 });
 
 console.log(dogs);
@@ -658,9 +659,24 @@ const okayDogs = dogs.filter(
 );
 console.log(okayDogs);
 
-const dogsCopy = dogs.slice();
-*/
+const dogGroups = Object.groupBy(dogs, dog =>
+  dog.curFood > dog.recFood
+    ? 'too=much'
+    : dog.curFood < dog.recFood
+    ? 'too-little'
+    : 'exact'
+);
+console.log(dogGroups);
 
+const dogGroupOwners = Object.groupBy(dogs, dog => dog.owners.length);
+console.log(dogGroupOwners);
+
+// const dogsAscendingOrder = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+// console.log(dogsAscendingOrder);
+
+const dogsAscendingOrder = dogs.toSorted((a, b) => a.recFood - b.recFood);
+console.log(dogsAscendingOrder);
+*/
 ///////////////////////////////////////////////
 // Challenge #4
 
@@ -868,4 +884,54 @@ console.log(reversedMovements);
 const newMovements = movements.with(1, 2000);
 console.log(newMovements);
 console.log(movements);
+*/
+/*
+///////////////////////////////////////////////////////////////////////////
+// Array Methods Practice
+
+// 1.
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, deposit) => acc + deposit, 0);
+console.log(bankDepositSum);
+
+// 2.
+// const numDeposits1000 = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov >= 1000).length;
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+console.log(numDeposits1000);
+
+// 3.
+const { deposit, withdrawal } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposit += cur) : (sums.withdrawal += -cur);
+      sums[cur > 0 ? 'deposit' : 'withdrawal'] += cur;
+      return sums;
+    },
+    { deposit: 0, withdrawal: 0 }
+  );
+console.log(deposit, withdrawal);
+
+// 4.
+// this is a nice title => This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+  return capitalize(
+    title
+      .toLowerCase()
+      .split(' ')
+      .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+      .join(' ')
+  );
+};
+console.log(convertTitleCase(`this is a nice title`));
+console.log(convertTitleCase(`this is a LONG title but not too long`));
+console.log(convertTitleCase(`and here is another title with an EXAMPLE`));
 */
