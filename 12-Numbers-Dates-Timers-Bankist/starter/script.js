@@ -205,14 +205,36 @@ const computeUsernames = function (accs) {
 
 computeUsernames(accounts);
 
+const startLogOutTimer = function () {
+  const tick = function () {
+    if (timer === 0) {
+      containerApp.style.opacity = 0;
+      labelWelcome.textContent = 'Log in to get started';
+      clearInterval(intervalTimer);
+    }
+    const min = Math.floor(timer / 60);
+    const sec = timer % 60;
+    labelTimer.textContent = `${`${min}`.padStart(2, 0)}:${`${sec}`.padStart(
+      2,
+      0
+    )}`;
+    timer -= 1;
+  };
+  let timer = 300;
+  tick();
+  const intervalTimer = setInterval(tick, 1000);
+  return intervalTimer;
+};
+
 /////////////////////////////////////////////////////////////
 // Event Handlers
 let currentAccount;
+let Timer;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 // Experimentation
 // const now = new Date();
@@ -261,6 +283,10 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // Logout Timer
+    if (Timer) clearInterval(Timer);
+    Timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -289,6 +315,9 @@ btnTransfer.addEventListener('click', function (e) {
       document.querySelector('footer').innerHTML = '';
     // Update UI
     updateUI(currentAccount);
+    // Reset Timer
+    clearInterval(Timer);
+    Timer = startLogOutTimer();
   } else {
     const message = `
       <footer style="color: red;">* Invalid Account or Amount</footer>
@@ -309,11 +338,15 @@ btnLoan.addEventListener('click', function (e) {
     loanAmount > 0 &&
     currentAccount.movements.some(mov => mov >= loanAmount / 10)
   ) {
-    currentAccount.movements.push(loanAmount);
-    currentAccount.movementsDates.push(new Date().toISOString());
-    if (document.querySelector('footer'))
-      document.querySelector('footer').innerHTML = '';
-    updateUI(currentAccount);
+    setTimeout(function () {
+      currentAccount.movements.push(loanAmount);
+      currentAccount.movementsDates.push(new Date().toISOString());
+      if (document.querySelector('footer'))
+        document.querySelector('footer').innerHTML = '';
+      updateUI(currentAccount);
+      clearInterval(Timer);
+      Timer = startLogOutTimer();
+    }, 2500);
   } else if (loanAmount <= 0) {
     const message = `
       <footer style="color: red;" id="valid">* Enter a Valid Amount</footer>
@@ -762,7 +795,9 @@ console.log(
     (1000 * 60 * 60 * 24)
 );
 */
-
+/*
+//////////////////////////////////////////////////////
+// INTL Number Formatting
 const num = 3884764.23;
 
 const options = {
@@ -782,3 +817,29 @@ console.log(
   ).format(num)}`
 );
 console.log(`India:   ${new Intl.NumberFormat('en-IN', options).format(num)}`);
+*/
+/*
+////////////////////////////////////////////////////////////////////////
+// Time Intervals and Time Out
+
+// SetTimeout only runs once the timer ends
+const ingredients = ['olives', 'spinach'];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => {
+    console.log(`Here is your Pizza with ${ing1}, ${ing2} 🍕`);
+  },
+  3000,
+  ...ingredients
+);
+console.log('waiting...');
+
+if (ingredients.includes('spinach')) {
+  clearTimeout(pizzaTimer);
+}
+
+// SetTime Interval
+setInterval(function () {
+  const date = new Date();
+  console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+}, 1000);
+*/
